@@ -3,11 +3,18 @@
 
 | Alan | Değer |
 |---|---|
-| Doküman sürümü | v1.0 (Taslak) |
-| Tarih | 04.11.2026 |
+| Doküman sürümü | v1.1 (Taslak) |
+| Tarih | 12.11.2026 (v1.0: 04.11.2026) |
 | Hazırlayan | Product Owner / Business Analyst |
 | Durum | Paydaş incelemesine açık |
 | Çalışma adı | **DernekHub** (geçici; marka adı netleşince değiştirilecek) |
+
+**Değişiklik günlüğü**
+
+| Sürüm | Tarih | Değişiklik |
+|---|---|---|
+| v1.0 | 04.11.2026 | İlk taslak |
+| v1.1 | 12.11.2026 | Q2, Q3, Q5, Q6, Q7 karara bağlandı (Bölüm 19): yalnızca Fransa → GDPR/CNIL, KVKK kapsam dışı; dil seti MVP'de FR (varsayılan)/TR/EN, Faz 2'de DE/NL, RTL yok; iş modeli ücretsiz (sponsorlu); içerik taşıma yok. E18, E21, E22 için Gherkin kabul kriterli user story'ler ve BR-AUD/BR-SUP/BR-PRV kuralları eklendi. |
 
 ---
 
@@ -26,7 +33,7 @@
 11. İçerik Yaşam Döngüsü (Durum Makinesi)
 12. Ekran Envanteri
 13. Fonksiyonel Olmayan Gereksinimler
-14. Gizlilik, KVKK / GDPR Uyumu
+14. Gizlilik ve GDPR Uyumu
 15. Bildirimler ve E-posta Şablonları
 16. Kotalar, Limitler ve Paketler
 17. Yol Haritası ve Fazlar (MVP tanımı)
@@ -113,12 +120,12 @@ Temel değer önerisi: *"Teknik bilgi gerektirmeden, 15 dakikada yayında olan, 
 - Kurumsal sayfalar, haberler/duyurular, etkinlikler, galeri, belge arşivi
 - Arşivleme, arama, etiket ve kategori yönetimi
 - Rol tabanlı yetkilendirme ve kullanıcı yönetimi
-- Çoklu dil (TR, FR; genişletilebilir)
+- Çoklu dil (MVP: FR varsayılan, TR, EN; Faz 2: DE, NL)
 - İletişim formu
 - Merkezi portal (tüm derneklerin etkinlik/haber akışı)
 - Süper admin paneli (kiracı yönetimi, kota, raporlama)
 - Temel analitik (ziyaret, en çok okunan içerik)
-- KVKK/GDPR uyumu (çerez onayı, aydınlatma metni, veri silme)
+- GDPR uyumu (CNIL yönergeleri; embed onayı, gizlilik metni, veri silme)
 
 ### 4.2 Kapsam Dışı (bu sürümde)
 - Online bağış / ödeme alma (yalnızca harici bağış linki gösterilir) → Faz 3
@@ -127,13 +134,15 @@ Temel değer önerisi: *"Teknik bilgi gerektirmeden, 15 dakikada yayında olan, 
 - Native mobil uygulama (web mobil uyumlu olacak; PWA Faz 3)
 - Serbest sayfa tasarımcısı (sürükle-bırak page builder) → kapsam dışı, bilinçli olarak
 - Forum, yorum, sosyal ağ özellikleri
+- Derneklerin mevcut sitelerinden otomatik içerik taşıma (Q5 kararı: içerik sıfırdan girilir)
+- Dernekten ödeme alma / faturalama (Q2 kararı: platform ücretsiz, sponsorlu)
 
 ### 4.3 Varsayımlar
 | # | Varsayım |
 |---|---|
-| A1 | Dernekler Türkçe ve Fransızca içerik üretecek (Fransa'daki Türk dernekleri senaryosu); dil seti konfigüre edilebilir olacak |
+| A1 | Dernekler Fransa'da faaliyet gösterir (Q3). Varsayılan içerik ve arayüz dili Fransızcadır; Türkçe ve İngilizce ek dil olarak kullanılır; dil seti kiracı bazında konfigüre edilir |
 | A2 | Her dernekte en az 1 kişi akıllı telefon ve e-posta kullanabiliyor |
-| A3 | Dernekler başlangıçta ücretsiz kullanacak; finansman bir çatı kuruluş/federasyon veya platform sahibi tarafından sağlanacak |
+| A3 | Dernekler platformu ücretsiz kullanır; finansman sponsorlukla sağlanır (Q2 kararı). Paketler yalnızca kota/limit için kullanılır, dernekten ödeme alınmaz |
 | A4 | İlk aşamada dernek başına ortalama 3 admin kullanıcı, yılda ~200 içerik, ~5 GB medya |
 | A5 | Veriler AB içinde barındırılacak (GDPR) |
 
@@ -141,7 +150,7 @@ Temel değer önerisi: *"Teknik bilgi gerektirmeden, 15 dakikada yayında olan, 
 - Bütçe: düşük işletme maliyeti hedefi (başlangıçta aylık < 150 €)
 - Ekip: küçük geliştirme ekibi (1–3 geliştirici)
 - Tüm kiracılar **aynı kod tabanını** kullanacak; dernek özelinde kod geliştirilmeyecek
-- Hukuki: GDPR (AB) ve gerekiyorsa KVKK (TR) uyumu zorunlu
+- Hukuki: GDPR (AB) ve Fransız hukuku (CNIL yönergeleri, LCEN – mentions légales) uyumu zorunlu. KVKK kapsam dışıdır (Q3 kararı: yalnızca Fransa).
 
 ---
 
@@ -309,7 +318,7 @@ Temel değer önerisi: *"Teknik bilgi gerektirmeden, 15 dakikada yayında olan, 
 | E18 | Denetim kaydı (audit log) | Must | MVP |
 | E19 | Bildirimler ve e-posta bülteni | Could | Faz 2 |
 | E20 | Paket, kota ve faturalama | Could | Faz 2 / 3 |
-| E21 | KVKK/GDPR araçları | Must | MVP |
+| E21 | GDPR araçları | Must | MVP |
 | E22 | Süper admin operasyon araçları | Must | MVP |
 
 Kabul kriterleri Gherkin (Given/When/Then – Diyelim ki/Eğer/O zaman) formatında yazılmıştır.
@@ -456,7 +465,7 @@ Durumlar: `aktif-kurulumda`, `aktif`, `askida`, `arsivlenmis`, `silinmek-uzere`.
 ### E04 – Kurumsal Sayfalar ve Yönetim Kurulu
 
 **US-04.1 – Sabit kurumsal sayfalar**
-Varsayılan sayfalar: Hakkımızda, Misyon & Vizyon, Tarihçe, Yönetim Kurulu, Tüzük (belgeye link), İletişim, KVKK/Gizlilik, Çerez Politikası.
+Varsayılan sayfalar: Hakkımızda, Misyon & Vizyon, Tarihçe, Yönetim Kurulu, Tüzük (belgeye link), İletişim, Gizlilik Politikası, Çerez Politikası, Mentions légales.
 - Her sayfa: başlık, kapak görseli (opsiyonel), zengin metin içeriği, SEO alanları.
 - Sayfalar menüde gösterilip gizlenebilir; sıra değiştirilebilir.
 
@@ -469,7 +478,7 @@ Varsayılan sayfalar: Hakkımızda, Misyon & Vizyon, Tarihçe, Yönetim Kurulu, 
 **US-04.3 – Yönetim kurulu / ekip**
 - Kişi kartı: ad soyad, unvan (Başkan, Başkan Yrd., Sekreter, Sayman, Üye, …), fotoğraf, kısa biyografi (≤ 500 karakter), e-posta (gösterilsin mi? – varsayılan hayır), sıra.
 - **Dönem** kavramı: Yönetim kurulu dönemleri (ör. 2024–2026). Yeni dönem başlatıldığında eski dönem otomatik arşivlenir ve "Geçmiş Yönetim Kurulları" sayfasında görüntülenir.
-- KVKK: Kişi fotoğrafı/biyografisi yüklenirken "Bu kişinin açık rızası alınmıştır" onay kutusu zorunlu.
+- GDPR: Kişi fotoğrafı/biyografisi yüklenirken "Bu kişinin açık rızası alınmıştır" onay kutusu zorunlu.
 
 **US-04.4 – İletişim bilgileri**
 - Adres, telefon, e-posta, çalışma saatleri, harita konumu (OpenStreetMap; Google Maps opsiyonel ve çerez onayına bağlı), sosyal medya (Facebook, Instagram, X, YouTube, TikTok, LinkedIn, WhatsApp kanalı/grup linki), bağış linki (harici).
@@ -586,7 +595,7 @@ Kabul kriterleri:
 - Albüm: başlık, tarih, açıklama, kapak, fotoğraflar (sürükleyerek sıralama), bağlı etkinlik (opsiyonel), kategori.
 - Albüm oluştururken doğrudan toplu yükleme.
 - Public: albüm listesi (yıl filtresi), albüm detayı ızgara + lightbox (kaydırma, klavye, mobil swipe), indirme butonu (dernek ayarına bağlı – varsayılan kapalı).
-- KVKK: Albüm ayarında "Bu albümdeki kişilerin görüntü paylaşımına izin alınmıştır" onayı; çocuk içeren fotoğraflar için hatırlatma metni.
+- GDPR (droit à l'image): Albüm ayarında "Bu albümdeki kişilerin görüntü paylaşımına izin alınmıştır" onayı; çocuk içeren fotoğraflar için hatırlatma metni.
 
 **US-07.4 – Video**
 - YouTube/Vimeo link yapıştırma → otomatik önizleme; "privacy-enhanced" (youtube-nocookie) mod.
@@ -650,7 +659,7 @@ Kabul kriterleri:
 ### E10 – Çoklu Dil
 
 **US-10.1 – Dil ayarları**
-- Platformun desteklediği diller: TR, FR, EN, DE, NL (genişletilebilir).
+- Platformun desteklediği diller: **MVP: FR (platform varsayılanı), TR, EN**; **Faz 2: DE, NL** (genişletilebilir). Yeni bir dil ancak public ve admin arayüz çeviri dosyaları eksiksiz olduğunda açılır. RTL (Arapça) kapsam dışıdır (Q7 kararı).
 - Kiracı: 1 varsayılan dil + en fazla 3 ek dil seçer.
 - Arayüz metinleri (menü, butonlar, "Daha fazla oku", tarih formatı) platform çeviri dosyalarından gelir.
 
@@ -670,7 +679,7 @@ Kabul kriterleri:
 ### E11 – İletişim Formu
 
 **US-11.1 – Form**
-- Alanlar: ad soyad, e-posta, telefon (opsiyonel), konu (seçim: Genel, Üyelik, Etkinlik, Basın, Gönüllülük, Diğer – kiracı düzenleyebilir), mesaj, KVKK onay kutusu (zorunlu, aydınlatma metni linki).
+- Alanlar: ad soyad, e-posta, telefon (opsiyonel), konu (seçim: Genel, Üyelik, Etkinlik, Basın, Gönüllülük, Diğer – kiracı düzenleyebilir), mesaj, GDPR onay kutusu (zorunlu, gizlilik politikası linki).
 - Spam koruması: görünmez honeypot + oran sınırlama + gizlilik dostu CAPTCHA (Cloudflare Turnstile / Friendly Captcha). Google reCAPTCHA kullanılmaz.
 - Gönderimde ziyaretçiye teşekkür mesajı + otomatik onay e-postası (opsiyonel).
 
@@ -678,7 +687,7 @@ Kabul kriterleri:
 - Mesaj listesi: okunmamış/okunmuş/yanıtlandı/arşiv, konu filtresi.
 - Seçili kullanıcılara yeni mesaj e-posta bildirimi.
 - "Yanıtla" → kullanıcının e-posta istemcisini açar (mailto) – MVP; panel içi yanıt Faz 2.
-- Mesajlar 24 ay sonra otomatik silinir (KVKK – saklama süresi, kiracı 6–36 ay arası ayarlayabilir).
+- Mesajlar 24 ay sonra otomatik silinir (GDPR – saklama süresi, kiracı 6–36 ay arası ayarlayabilir).
 
 ---
 
@@ -701,7 +710,7 @@ Dernek, ana sayfada hangi bölümlerin hangi sırada görüneceğini seçer (sü
 **US-12.2 – Menü yönetimi**
 - Ana menü: max 7 üst öğe, 1 seviye alt menü.
 - Öğe tipi: sistem sayfası, özel sayfa, kategori, harici link.
-- Footer: 3 kolon (otomatik iletişim bilgileri + link grupları + sosyal medya), alt satır: telif, KVKK, çerez linkleri, "DernekHub ile oluşturuldu" ibaresi (Ücretsiz pakette zorunlu).
+- Footer: 3 kolon (otomatik iletişim bilgileri + link grupları + sosyal medya), alt satır: telif, Mentions légales, gizlilik ve çerez linkleri, "DernekHub ile oluşturuldu" ibaresi (Ücretsiz pakette zorunlu).
 
 ---
 
@@ -788,6 +797,39 @@ Dernek, ana sayfada hangi bölümlerin hangi sırada görüneceğini seçer (sü
 - Saklama: 13 ay. Değiştirilemez (append-only).
 - Dernek Yöneticisi kendi kiracısının kaydını görüntüler ve filtreler.
 
+**US-18.1 – Olayların kaydedilmesi**
+*Platform olarak, kritik eylemleri değiştirilemez biçimde kaydetmek istiyorum, böylece bir olay sonrası kimin neyi yaptığı kanıtlanabilsin.*
+
+Kabul kriterleri:
+- Diyelim ki bir Editör "Dernek A" kiracısında bir haberi yayınladı, o zaman:
+  - `action = content.publish`, `tenant_id = A`, `actor_user_id`, `target_type = posts`, `target_id`, kısaltılmış IP ve user agent ile bir kayıt oluşur,
+  - `diff_summary` yalnızca değişen alan adlarını ve durum geçişini (`draft → published`) içerir; kişisel veri içermez (BR-AUD-02).
+- Diyelim ki biri e-posta ile başarısız giriş denedi, o zaman `auth.login_failed` olayı e-posta **maskelenmiş** olarak (`a***@d***.fr`) kaydedilir.
+- Eğer audit log yazımı başarısız olursa, asıl işlem geri alınmaz; hata Sentry'ye `tenantId` ile raporlanır ve kayıt job kuyruğu üzerinden yeniden denenir (BR-AUD-03).
+- Eğer herhangi bir kullanıcı (Süper Admin dahil) bir audit kaydını API veya admin üzerinden güncellemeye ya da silmeye çalışırsa, istek 403 döner (BR-AUD-01).
+- Diyelim ki Süper Admin kiracıya ait olmayan bir platform işlemi yaptı (ör. plan değişikliği), o zaman kayıt `tenant_id = null` ile platform olayı olarak yazılır.
+
+**US-18.2 – Dernek Yöneticisinin kendi kaydını görüntülemesi**
+*Dernek Yöneticisi olarak, derneğimin panelinde kimin neyi değiştirdiğini görmek istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Dernek A yöneticisi "Etkinlik Kaydı" ekranını açtı, o zaman yalnızca `tenant_id = A` kayıtlarını, en yeni üstte, sayfalı olarak görür.
+- Filtreler: tarih aralığı, kullanıcı, eylem türü, hedef türü. Filtre sonucu boşsa "Bu kriterlere uyan kayıt yok" mesajı gösterilir.
+- Eğer Dernek A yöneticisi URL'yi değiştirerek Dernek B'nin kaydına erişmeye çalışırsa, 404 döner ve deneme loglanır (BR-AUTH-04).
+- Eğer kullanıcı Editör veya Yazar rolündeyse, menüde ekran görünmez; doğrudan URL ile erişimde 403 döner (§6.2).
+- Diyelim ki Süper Admin destek modunda bir işlem yaptı, o zaman bu kayıt Dernek A yöneticisine "Platform desteği" rozetiyle görünür (BR-AUTH-03).
+- Mobil (375 px): liste kart görünümüne geçer; her kartta zaman, kullanıcı, eylem ve hedef okunur; filtreler alttan açılan panelde.
+- Çoklu dil: eylem adları ve tarih/saat, kullanıcının arayüz dilinde (FR/TR/EN) ve kiracının saat diliminde gösterilir.
+
+**US-18.3 – Global audit log ve saklama (SA-12)**
+*Süper Admin olarak, tüm kiracıların kayıtlarını tek yerden aramak istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Süper Admin SA-12 ekranında kiracı filtresi seçti, o zaman o kiracının kayıtlarını görür; filtre yoksa tüm kiracılar + platform olayları listelenir.
+- Platform Destek rolü aynı ekranı salt okunur görür; dışa aktarma butonu yalnızca Süper Admin'de bulunur.
+- Diyelim ki bir kaydın oluşturulmasının üzerinden 13 ay geçti, o zaman günlük `retention.purge` job'u kaydı kalıcı olarak siler (PRV-08). Silme işlemi de sayı olarak (kaç kayıt silindiği) bir platform olayı olarak kaydedilir.
+- Eğer kiracı kalıcı olarak silinirse (BR-TEN-04), o kiracının audit kayıtları da silinir. Kiracı silme olayının kendisi `tenant_id = null` platform kaydı olarak 13 ay saklanır.
+
 ---
 
 ### E19 – Bildirimler ve E-posta Bülteni (Faz 2)
@@ -803,12 +845,66 @@ Dernek, ana sayfada hangi bölümlerin hangi sırada görüneceğini seçer (sü
 
 - Paketler ve limitler: Bölüm 16.
 - Süper Admin kiracıya paket atar, kota istisnası tanımlar.
-- Faz 3: Stripe ile otomatik abonelik ödemesi, fatura üretimi.
+- ~~Faz 3: Stripe ile otomatik abonelik ödemesi, fatura üretimi.~~ Q2 kararıyla (ücretsiz, sponsorlu) kapsam dışı. Paketler yalnızca kota/limit amacıyla kullanılır.
 
 ---
 
-### E21 – KVKK / GDPR Araçları
-Detay: Bölüm 14.
+### E21 – GDPR Araçları
+Gereksinimlerin tam listesi Bölüm 14'te (PRV-01…11). Fotoğraf rızası (PRV-07) US-04 ve US-07'de, iletişim formu rızası (PRV-05) E11'de karşılanır. Aşağıdaki story'ler kalan araçları kapsar.
+
+**US-21.1 – Veri İşleme Sözleşmesi (DPA) onayı**
+*Platform olarak, her dernekle veri işleme sözleşmesini kayıt altına almak istiyorum (GDPR md. 28).*
+
+Kabul kriterleri:
+- Diyelim ki Dernek Yöneticisi kurulum sihirbazını (US-01.3) ilk kez açtı, o zaman ilk adımda DPA metni gösterilir ve "Okudum, kabul ediyorum" onayı alınmadan sonraki adıma geçilemez.
+- Onay verildiğinde DPA sürümü, onaylayan kullanıcı, zaman ve kısaltılmış IP kaydedilir; olay audit log'a `compliance.dpa_accepted` olarak yazılır.
+- Eğer DPA metni yeni bir sürümle güncellenirse, Dernek Yöneticileri bir sonraki girişte yeni sürümü onaylamaya yönlendirilir. Onaylanana kadar panel kullanılabilir kalır ancak üstte kalıcı bir uyarı gösterilir (BR-PRV-01).
+- Editör ve Yazar DPA onayı veremez; bu adım yalnızca Dernek Yöneticisine gösterilir.
+- DPA metni FR (hukuken bağlayıcı sürüm), TR ve EN (bilgi amaçlı) olarak sunulur; bilgi amaçlı sürümlerde bu durum açıkça belirtilir.
+- Mobil (375 px): metin kaydırılabilir alanda okunur, onay butonu ekranın altında sabit durur.
+
+**US-21.2 – Yasal metin şablonları**
+*Dernek Yöneticisi olarak, gizlilik politikası, çerez politikası ve mentions légales sayfalarımın hazır gelmesini istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki kiracı oluşturuldu, o zaman Gizlilik Politikası, Çerez Politikası ve Mentions légales sayfaları platform şablonlarından (SA-06) dernek bilgileriyle (resmi unvan, RNA no, adres, yayın sorumlusu, barındırıcı bilgileri) otomatik doldurulur (PRV-04).
+- Eğer şablonun ihtiyaç duyduğu zorunlu bir alan (ör. yayın sorumlusu adı) boşsa, sayfa yine oluşturulur ama panelde "Yasal sayfanızda eksik bilgi var" uyarısı gösterilir ve eksik alan vurgulanır.
+- Dernek Yöneticisi metni düzenleyebilir. "Şablona geri dön" eylemi, düzenlemeleri kaybedeceğini onay penceresiyle bildirir.
+- Platform şablonu güncellenirse, düzenlenmemiş sayfalar otomatik güncellenir. Düzenlenmiş sayfalarda ise "Yeni şablon sürümü mevcut" bildirimi gösterilir ve içerik kendiliğinden değişmez.
+- Footer'daki yasal linkler her dil sürümünde mevcuttur. Bir yasal sayfanın ilgili dilde çevirisi yoksa varsayılan dildeki (FR) sürüm gösterilir (US-10.2 b).
+- Yetki: düzenleme yalnızca Dernek Yöneticisi ve Süper Admin; Editör görüntüler.
+
+**US-21.3 – Onaya bağlı embed'ler**
+*Ziyaretçi olarak, üçüncü taraf içerikler bana sorulmadan çerez bırakmasın istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki bir haberde YouTube videosu var, o zaman sayfa ilk yüklendiğinde üçüncü taraf hiçbir istek yapılmaz; yerine "Bu içerik YouTube tarafından sağlanır. Yüklemek için tıklayın" yer tutucusu ve gizlilik politikası linki gösterilir (PRV-03).
+- Eğer ziyaretçi "Yükle"ye tıklarsa, yalnızca o embed `youtube-nocookie.com` üzerinden yüklenir. Seçim çerezle değil, yalnızca o sayfa görünümü boyunca bellekte tutulur.
+- Eğer embed URL'si izin verilen sağlayıcı listesinde değilse (YouTube, Vimeo, OSM harita), editör kaydederken "Bu kaynak desteklenmiyor" hatası alır.
+- Yer tutucu klavyeyle odaklanabilir, Enter ile yüklenir ve erişilebilir bir ada sahiptir (WCAG 2.1 AA).
+- Yer tutucu metni ziyaretçinin site dilinde (FR/TR/EN) gösterilir.
+
+**US-21.4 – İlgili kişi talepleri (erişim / silme)**
+*Dernek Yöneticisi olarak, bir kişi verilerini istediğinde veya silinmesini talep ettiğinde bunu birkaç tıkla yapabilmek istiyorum (GDPR md. 15, 17).*
+
+Kabul kriterleri:
+- Diyelim ki yönetici "Kişisel veri talepleri" ekranına bir e-posta adresi girdi, o zaman yalnızca kendi kiracısındaki iletişim mesajları ve (Faz 2) abonelik kayıtları listelenir (PRV-06).
+- "Dışa aktar" seçilirse kayıtlar JSON + okunabilir PDF olarak hazırlanır. İndirme linki 72 saat geçerlidir (US-01.5 ile aynı mekanizma).
+- "Sil" seçilirse onay penceresi silinecek kayıt sayısını gösterir. Onay sonrası kayıtlar **kalıcı** silinir (çöp kutusuna gitmez; BR-PRV-02) ve audit log'a e-posta maskelenmiş olarak yazılır.
+- Eğer e-postayla eşleşen kayıt yoksa, "Bu e-posta adresine ait kayıt bulunamadı" mesajı gösterilir ve bu sonuç da audit log'a yazılır.
+- Eğer yönetici başka bir kiracının verisini sorgulamaya çalışırsa (API manipülasyonu), sonuçlar boş döner. Kiracı sunucuda belirlenir, istekten alınmaz (CLAUDE.md §4).
+- Yetki: yalnızca Dernek Yöneticisi. Editör, Yazar ve Platform Destek bu ekrana erişemez.
+- Mobil (375 px): arama, sonuç listesi ve eylem butonları tek sütunda kullanılabilir.
+
+**US-21.5 – Otomatik saklama süreleri**
+*Platform olarak, kişisel verileri saklama süresi dolunca kendiliğinden silmek istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki bir iletişim mesajı kiracının saklama süresinden (varsayılan 24 ay, 6–36 ay arası ayarlanabilir) daha eski, o zaman günlük `retention.purge` job'u mesajı kalıcı siler (BR-MSG-01, PRV-08).
+- Eğer yönetici saklama süresini kısaltırsa, değişiklik bir sonraki job çalışmasında uygulanır ve ayar ekranında "X mesaj bir sonraki gece silinecek" önizlemesi gösterilir.
+- Eğer saklama süresi için 6'dan küçük veya 36'dan büyük bir değer girilirse, kayıt engellenir ve doğrulama mesajı gösterilir.
+- Çöp kutusundaki içerik 30 gün sonra kalıcı silinir (CLAUDE.md §6).
+- Job her çalışmada kiracı bazında silinen kayıt sayısını loglar. Log'a kişisel veri yazılmaz.
 
 ### E22 – Süper Admin Operasyon Araçları
 
@@ -819,6 +915,75 @@ Detay: Bölüm 14.
 - Platform ayarları: desteklenen diller, font listesi, rezerve slug'lar, varsayılan sayfa şablonları, e-posta şablonları, yasal metin şablonları.
 - Sağlık ekranı: hata oranları, kuyruk durumu (görsel işleme, e-posta), domain/SSL durumları.
 - Şablon güncellemeleri: Yeni sayfa şablonu/bölüm eklendiğinde tüm kiracılara "yeni özellik" olarak sunulur; mevcut içeriği bozmaz.
+
+**US-22.1 – Kiracı listesi (SA-01)**
+*Süper Admin olarak, 50+ derneği tek ekrandan arayıp filtreleyebilmek istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Süper Admin SA-01'i açtı, o zaman kiracılar şu sütunlarla, sayfalı olarak listelenir: ad, slug, durum, kullanıcı sayısı, içerik sayısı, depolama, son giriş, oluşturulma tarihi.
+- Ad veya slug ile arama, aksan ve büyük/küçük harf duyarsızdır ("Ecole" araması "École"u bulur).
+- Filtreler: durum, paket, şehir, son aktivite ("30 gündür giriş yok" gibi). Sonuç yoksa "Kriterlere uyan dernek yok" mesajı gösterilir.
+- Sayaçlar (kullanıcı/içerik/depolama) önceden hesaplanmış değerlerden okunur. Liste 500 kiracıda p95 < 500 ms'de yüklenir (§13.1).
+- Yetki: Platform Destek salt okunur görür; Dernek rollerindeki kullanıcılar için ekran yoktur (403).
+- Mobil (375 px): tablo kart görünümüne geçer (ad, durum rozeti, depolama).
+- Çoklu dil: ekran metinleri admin arayüz dilinde (FR/TR/EN).
+
+**US-22.2 – Kiracı detayı (SA-03)**
+*Süper Admin olarak, bir derneğin durumunu tek sayfada görmek ve durum işlemlerini yapmak istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Süper Admin bir kiracıyı açtı, o zaman sekmeler gösterilir: Özet, Kullanıcılar, Kota kullanımı, Domainler, Audit log, İç notlar.
+- Durum geçişleri US-01.4'teki tabloya uyar. Her geçiş için gerekçe zorunludur; gerekçe boşsa işlem butonu pasif kalır.
+- Eğer izin verilmeyen bir geçiş denenirse (ör. `silinmek-uzere → arsivlenmis`), API 422 döner ve arayüzde bu seçenek hiç gösterilmez.
+- İç notlar yalnızca Süper Admin ve Platform Destek tarafından görülür; kiracı kullanıcılarına hiçbir API yanıtında dönmez (izolasyon testi).
+- Platform Destek, durum işlemi yapamaz; yalnızca not ekleyebilir ve kullanıcıya şifre sıfırlama gönderebilir (§6.1).
+
+**US-22.3 – Destek modu (SA-04)**
+*Süper Admin olarak, bir derneğin sorununu görmek için onun panelini gerekçe göstererek ve zaman sınırıyla görüntülemek istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Süper Admin "Kiracı olarak görüntüle"ye tıkladı ve gerekçe girdi, o zaman 60 dakika geçerli bir destek oturumu başlar (BR-SUP-01).
+  - Panelin üstünde kalıcı, kapatılamaz bir şerit gösterilir: "Destek modu – Dernek A – kalan süre 59 dk – Çık".
+  - Dernek A'nın tüm Dernek Yöneticilerine N-13 e-postası gönderilir (gerekçe dahil).
+  - `support.session_started` olayı audit log'a yazılır (BR-AUTH-03).
+- Destek oturumundaki her yazma işlemi audit log'a `via_support_session = true` işaretiyle ayrıca kaydedilir.
+- Eğer gerekçe 10 karakterden kısaysa, oturum başlatılamaz.
+- Eğer kullanıcının 2FA'sı etkin değilse, destek modu başlatılamaz (US-02.4) ve kullanıcı 2FA kurulumuna yönlendirilir.
+- Eğer 60 dakika dolarsa, oturum sunucu tarafında sonlandırılır. Kaydedilmemiş form varsa "Destek süresi doldu" mesajı gösterilir ve `support.session_ended` olayı yazılır.
+- Destek modunda kullanıcı silme, rol değiştirme ve kiracı silme işlemleri yapılamaz (BR-SUP-02). Bu işlemler kiracı detayından (US-22.2) yapılır.
+- Platform Destek rolü destek modunu yalnızca salt okunur başlatabilir. Tüm yazma işlemleri 403 döner.
+
+**US-22.4 – Global duyuru (SA-08)**
+*Süper Admin olarak, tüm dernek panellerine duyuru göstermek istiyorum.*
+
+Kabul kriterleri:
+- Diyelim ki Süper Admin FR/TR/EN metinleri, başlangıç-bitiş tarihi ve tür (bilgi/uyarı) ile bir duyuru oluşturdu, o zaman başlangıç tarihinden itibaren tüm kiracı panellerinin üstünde, kullanıcının arayüz dilinde bir banner gösterilir.
+- Eğer kullanıcının dilinde metin yoksa FR metni gösterilir. FR metni zorunludur; FR boşsa duyuru kaydedilemez.
+- Kullanıcı banner'ı kapatabilir; kapatma durumu kullanıcı bazında saklanır ve aynı duyuru tekrar gösterilmez.
+- Bitiş tarihi başlangıçtan önceyse, kayıt engellenir.
+- Aynı anda en fazla 1 aktif duyuru gösterilir (BR-SUP-03); yeni duyuru, çakışan eskiyi sonlandırıp sonlandırmayacağını sorar.
+- Banner public sitede görünmez. Mobilde metin satır kaydırır ve kapatma butonu en az 44×44 px dokunma alanına sahiptir.
+
+**US-22.5 – Platform ayarları (SA-06)**
+*Süper Admin olarak, tüm kiracıları etkileyen varsayılanları kod değiştirmeden yönetmek istiyorum.*
+
+Kabul kriterleri:
+- Yönetilen ayarlar: desteklenen diller, font listesi, rezerve slug'lar, varsayılan sayfa şablonları, e-posta şablonları (SA-07), yasal metin şablonları (US-21.2), DPA metni ve sürümü (US-21.1).
+- Diyelim ki Süper Admin rezerve slug listesine `blog` ekledi, o zaman yeni kiracı oluşturmada `blog` reddedilir (BR-TEN-01). Mevcut `blog` slug'lı bir kiracı varsa ekran bunu uyarı olarak gösterir; mevcut kiracı etkilenmez.
+- Eğer bir dil, çeviri dosyaları eksikken etkinleştirilmeye çalışılırsa, işlem engellenir ve eksik anahtar sayısı gösterilir (US-10.1).
+- Eğer kullanımda olan bir font listeden kaldırılırsa, onu kullanan kiracılar varsayılan fonta düşer ve bu kiracı sayısı onay penceresinde gösterilir.
+- Her ayar değişikliği önceki/yeni değer özetiyle platform audit log'una yazılır.
+- Yetki: yalnızca Süper Admin; Platform Destek salt okunur.
+
+**US-22.6 – Sistem sağlığı (SA-10)**
+*Süper Admin olarak, platformda bir sorun olduğunu derneklerden önce fark etmek istiyorum.*
+
+Kabul kriterleri:
+- Ekran şunları gösterir: son 24 saatteki hata oranı (Sentry), job kuyruğu durumu (bekleyen/başarısız sayısı ve iş türü: `media.process`, `email.send` …), domain/SSL durumları ve süresi 14 günden az kalan sertifikalar.
+- Diyelim ki başarısız bir job var, o zaman Süper Admin job'u yeniden deneyebilir. İşlem audit log'a yazılır.
+- Eğer bir dış veri kaynağına (ör. Sentry API) ulaşılamazsa, o panel "Veri alınamadı" durumunu gösterir; diğer paneller çalışmaya devam eder.
+- Başarısız job listesinde kişisel veri (e-posta, IP) maskelenmiş olarak gösterilir.
+- Yetki: Süper Admin ve Platform Destek (salt okunur; yeniden deneme yalnızca Süper Admin'de).
 
 ---
 
@@ -858,8 +1023,8 @@ Her içerik: translation_group_id (aynı içeriğin dil sürümlerini bağlar)
 | founded_year | int | |
 | city, country | string | country: ISO-3166 |
 | timezone | string | Varsayılan Europe/Paris |
-| default_locale | string(5) | ör. tr |
-| locales | string[] | ör. [tr, fr] |
+| default_locale | string(5) | Varsayılan fr |
+| locales | string[] | ör. [fr, tr]; MVP değerleri: fr, tr, en |
 | status | enum | aktif-kurulumda, aktif, askida, arsivlenmis, silinmek-uzere |
 | plan_id | FK | |
 | storage_used_bytes | bigint | Türetilmiş, periyodik |
@@ -946,6 +1111,14 @@ Her içerik: translation_group_id (aynı içeriğin dil sürümlerini bağlar)
 | BR-MSG-02 | Aynı IP'den 10 dk içinde en fazla 3 form gönderimi |
 | BR-PRT-01 | Yalnızca `aktif` kiracıların `show_on_portal=true` içerikleri portalda görünür |
 | BR-BRD-01 | Aynı anda yalnızca bir `is_current` yönetim kurulu dönemi olabilir |
+| BR-AUD-01 | Audit log kayıtları hiçbir rol tarafından güncellenemez veya silinemez; yalnızca `retention.purge` job'u ve kiracı kalıcı silme akışı siler (DB düzeyinde UPDATE/DELETE yetkisi olmayan rol) |
+| BR-AUD-02 | `diff_summary` kişisel veri içermez: yalnızca alan adları ve durum geçişleri yazılır; e-postalar maskelenir, IP kısaltılır |
+| BR-AUD-03 | Audit log yazımının başarısız olması asıl işlemi geri almaz; kayıt kuyruk üzerinden yeniden denenir ve hata izlenir |
+| BR-SUP-01 | Destek oturumu en fazla 60 dakikadır, gerekçe (≥ 10 karakter) ve etkin 2FA gerektirir; başlangıçta kiracının tüm yöneticilerine bildirim (N-13) gider |
+| BR-SUP-02 | Destek oturumunda kullanıcı silme, rol değiştirme ve kiracı silme yapılamaz |
+| BR-SUP-03 | Aynı anda en fazla 1 aktif global duyuru gösterilir |
+| BR-PRV-01 | DPA'nın güncel sürümü onaylanmamış kiracıda panel kullanılabilir kalır ancak yöneticilere kalıcı uyarı gösterilir |
+| BR-PRV-02 | İlgili kişi talebiyle yapılan silme kalıcıdır, çöp kutusuna gitmez; silme olayı maskelenmiş olarak audit log'a yazılır |
 
 ---
 
@@ -1128,7 +1301,7 @@ Her içerik: translation_group_id (aynı içeriğin dil sürümlerini bağlar)
 
 ---
 
-## 14. Gizlilik, KVKK / GDPR Uyumu
+## 14. Gizlilik ve GDPR Uyumu
 
 ### 14.1 Roller
 - **Dernek** = Veri sorumlusu (controller) kendi sitesindeki kişisel veriler için (iletişim mesajları, yönetim kurulu bilgileri, fotoğraflardaki kişiler, aboneler).
@@ -1141,7 +1314,7 @@ Her içerik: translation_group_id (aynı içeriğin dil sürümlerini bağlar)
 | PRV-01 | Tüm veriler AB'de barındırılır; AB dışı alt işleyenler listelenir ve SCC ile güvence altına alınır |
 | PRV-02 | Varsayılan olarak çerezsiz public site: analitik çerezsiz, fontlar self-host, harita OSM; zorunlu çerez yalnızca panel oturumu |
 | PRV-03 | YouTube/Vimeo/Google Maps embed'leri kullanılırsa çerez onay bandı otomatik devreye girer; onaya kadar "İçeriği yüklemek için tıklayın" yer tutucusu |
-| PRV-04 | Yasal metin şablonları (Gizlilik Politikası, Çerez Politikası, Künye/Mentions légales, KVKK Aydınlatma Metni) dernek bilgileriyle otomatik doldurulur, düzenlenebilir |
+| PRV-04 | Yasal metin şablonları (Gizlilik Politikası, Çerez Politikası, Mentions légales – LCEN) Fransız hukukuna göre, dernek bilgileriyle otomatik doldurulur, düzenlenebilir |
 | PRV-05 | İletişim formunda açık rıza onay kutusu ve aydınlatma metni linki; rıza zaman damgası saklanır |
 | PRV-06 | İlgili kişi talepleri (erişim, silme): Dernek Yöneticisi e-posta adresine göre mesaj/abone kayıtlarını bulup dışa aktarabilir veya silebilir |
 | PRV-07 | Fotoğraf/kişi yüklemelerinde rıza teyidi onay kutuları (yönetim kurulu, albüm); çocuk fotoğrafları için uyarı metni |
@@ -1215,7 +1388,7 @@ Teknik limitler: tek dosya görsel 20 MB, belge 25 MB, video 200 MB; tek seferde
 **MVP "Definition of Done":**
 - Kabul kriterleri karşılandı, birim + entegrasyon testleri, kiracı izolasyon testleri geçti
 - WCAG AA otomatik denetim (axe) hatasız
-- TR/FR arayüz çevirileri tamam
+- FR/TR/EN arayüz çevirileri tamam
 - Yardım merkezi: her ana işlem için 1 kısa video/rehber
 
 **Pilot:** 3 dernekle 2 haftalık pilot → geri bildirim → düzeltmeler.
@@ -1236,7 +1409,7 @@ Online bağış (Stripe/HelloAsso), etkinlik kayıt formu ve bilet, üye yöneti
 | H1–H4 | Keşif, prototip, teknik spike |
 | H5–H8 | Altyapı, tenant, auth, tema, medya |
 | H9–H12 | Haber, etkinlik, galeri, belgeler, sayfalar |
-| H13–H14 | Arama, arşiv, çoklu dil, SEO, KVKK |
+| H13–H14 | Arama, arşiv, çoklu dil, SEO, GDPR |
 | H15–H16 | Stabilizasyon, pilot (3 dernek) |
 | H17–H20 | Yaygınlaştırma (50 dernek) |
 | H21–H30 | Faz 2 |
@@ -1251,7 +1424,7 @@ Online bağış (Stripe/HelloAsso), etkinlik kayıt formu ve bilet, üye yöneti
 | R2 | Kiracılar arası veri sızıntısı | Düşük | Çok yüksek | RLS + uygulama filtresi, CI'da izolasyon testleri, pentest |
 | R3 | Teknik olmayan kullanıcılar paneli karmaşık buluyor | Orta | Yüksek | Kullanılabilirlik testleri (pilot), sade arayüz, rol bazlı menü gizleme |
 | R4 | Medya depolama maliyeti hızla artıyor | Orta | Orta | Otomatik sıkıştırma, orijinal saklamama, kotalar, video için YouTube |
-| R5 | KVKK/GDPR ihlali (izinsiz fotoğraf, çocuk görüntüsü) | Orta | Yüksek | Rıza onay kutuları, uyarı metinleri, DPA, şikâyet/kaldırma süreci |
+| R5 | GDPR ihlali (izinsiz fotoğraf, çocuk görüntüsü) | Orta | Yüksek | Rıza onay kutuları, uyarı metinleri, DPA, şikâyet/kaldırma süreci |
 | R6 | Her dernek "özel" talep ediyor, şablon dağılıyor | Yüksek | Orta | Net ürün ilkesi: konfigürasyon evet, özel kod hayır; talepleri backlog'da oylama |
 | R7 | Yönetici değişiminde erişim kaybı | Orta | Orta | Yetki devri akışı, min. 2 yönetici önerisi, Süper Admin kurtarma süreci |
 | R8 | Spam/kötüye kullanım (form, içerik) | Orta | Orta | Captcha, oran sınırı, içerik bildirme ve Süper Admin askıya alma |
@@ -1265,12 +1438,12 @@ Online bağış (Stripe/HelloAsso), etkinlik kayıt formu ve bilet, üye yöneti
 | # | Soru | Sahibi | Karar tarihi |
 |---|---|---|---|
 | Q1 | Platformun marka adı ve ana domain ne olacak? | Platform sahibi | Faz 0 |
-| Q2 | İş modeli: tamamen ücretsiz (sponsorlu), freemium, yoksa federasyon ödemeli mi? | Platform sahibi | Faz 0 |
-| Q3 | Dernekler hangi ülkelerde? (Yalnızca Fransa mı, Türkiye de var mı? → KVKK kapsamı, dil seti) | Platform sahibi | Faz 0 |
-| Q4 | Bir çatı kuruluş/federasyon var mı, Merkezi Portal'ın sahibi kim? | Platform sahibi | Faz 0 |
-| Q5 | Derneklerin mevcut sitelerinden içerik taşıma (migration) gerekecek mi? Hangi platformlardan? | BA | Faz 0 |
-| Q6 | Editörün varsayılan olarak yayın yetkisi olsun mu, yoksa onay akışı MVP'de mi olmalı? | PO | Faz 0 |
-| Q7 | Varsayılan dil seti TR+FR yeterli mi; Arapça (RTL) ihtiyacı var mı? | PO | Faz 0 |
+| Q2 | İş modeli: tamamen ücretsiz (sponsorlu), freemium, yoksa federasyon ödemeli mi? → **Karar (12.11.2026): Ücretsiz, sponsorlu.** Paketler yalnızca kota için; faturalama kapsam dışı (A3, §4.2). | Platform sahibi | ✅ Kapandı |
+| Q3 | Dernekler hangi ülkelerde? (Yalnızca Fransa mı, Türkiye de var mı? → KVKK kapsamı, dil seti) → **Karar (12.11.2026): Yalnızca Fransa.** GDPR + CNIL + LCEN; KVKK kapsam dışı; varsayılan dil FR, saat dilimi Europe/Paris. | Platform sahibi | ✅ Kapandı |
+| Q4 | Bir çatı kuruluş/federasyon var mı, Merkezi Portal'ın sahibi kim? | Platform sahibi | Faz 2 başlamadan |
+| Q5 | Derneklerin mevcut sitelerinden içerik taşıma (migration) gerekecek mi? Hangi platformlardan? → **Karar (12.11.2026): Hayır**, içerik sıfırdan girilir (§4.2). | BA | ✅ Kapandı |
+| Q6 | Editörün varsayılan olarak yayın yetkisi olsun mu, yoksa onay akışı MVP'de mi olmalı? → **Karar: BR-AUTH-02** – kiracı bazında ayar, varsayılan açık; onay akışı Faz 2 (E15). | PO | ✅ Kapandı |
+| Q7 | Varsayılan dil seti TR+FR yeterli mi; Arapça (RTL) ihtiyacı var mı? → **Karar (12.11.2026): MVP FR (varsayılan)/TR/EN; DE/NL Faz 2; RTL kapsam dışı** (US-10.1). | PO | ✅ Kapandı |
 | Q8 | Online bağış ve etkinlik kaydı ne kadar acil? (Faz 3 yeterli mi?) | Paydaşlar | Faz 1 sonu |
 | Q9 | Sosyal medya (Instagram/Facebook) içeriğinin otomatik çekilmesi istenecek mi? (API ve gizlilik kısıtları) | Paydaşlar | Faz 1 |
 | Q10 | Destek kim tarafından verilecek ve hangi saatlerde? | Platform sahibi | Faz 1 |

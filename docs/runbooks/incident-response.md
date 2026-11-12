@@ -44,7 +44,7 @@ Platform, dernek verileri için **veri işleyen** (processor), panel hesapları 
 
 ### 3.4 Bildirim (en geç T0 + 72 saat)
 - **Dernek verileri (processor rolü):** Etkilenen her derneğin yöneticisine **gecikmeksizin** bildirim yapılır. Denetim otoritesine bildirim kararı veri sorumlusu olan derneğindir; platform bu karar için gereken bilgiyi sağlar (PRV-10).
-- **Panel hesapları (controller rolü):** Risk varsa platform, 72 saat içinde yetkili denetim otoritesine bildirir: Fransa için CNIL, Türkiye için KVKK Kurulu. Hangi otoritenin yetkili olduğu PRD Q3'ün cevabına bağlıdır.
+- **Panel hesapları (controller rolü):** Risk varsa platform, 72 saat içinde yetkili denetim otoritesi olan **CNIL**'e bildirir (PRD Q3 kararı: yalnızca Fransa).
 - Yüksek risk varsa ilgili kişilere de bildirim yapılır.
 - Bildirim metinleri TR/FR/EN hazırlanır; içerik: ne oldu, hangi veriler, alınan önlemler, kişilerin yapması önerilenler, iletişim noktası.
 
@@ -55,6 +55,6 @@ Platform, dernek verileri için **veri işleyen** (processor), panel hesapları 
 4. Bu ihlal, PRV-11 kapsamındaki ihlal kaydına işlenir.
 
 ## 4. Açık noktalar
-- Denetim otoritesi ve iletişim kişileri: PRD Q3 cevabına bağlı.
+- CNIL bildirim kanalı ve iç iletişim kişileri: platform sahibi tarafından doldurulacak.
 - Nöbet/erişilebilirlik saatleri: PRD Q10 cevabına bağlı.
 - Alarm kanalları (e-posta/Slack/Telegram): Better Stack kurulumunda (H1) netleşir.

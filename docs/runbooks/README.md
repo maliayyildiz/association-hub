@@ -4,7 +4,7 @@ Sahibi: `devops-platform-engineer`. Kaynak: `.claude/skills/devops-platform-engi
 
 | Runbook | Amaç | Durum | Hedef |
 |---|---|---|---|
-| [incident-response.md](incident-response.md) | Olay müdahalesi, izolasyon ihlali, GDPR/KVKK 72 saat bildirimi | Taslak | Faz 0 sonu onay |
+| [incident-response.md](incident-response.md) | Olay müdahalesi, izolasyon ihlali, GDPR 72 saat bildirimi | Taslak | Faz 0 sonu onay |
 | deploy.md | Prod deploy adımları, migrasyon sırası | Yazılacak | H13–H14 |
 | rollback.md | Vercel Instant Rollback + Neon restore | Yazılacak | H13–H14 |
 | disaster-recovery.md | RPO ≤ 5 dk / RTO ≤ 4 saat geri dönüş | Yazılacak | H13–H14 |

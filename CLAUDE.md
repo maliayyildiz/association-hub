@@ -177,7 +177,7 @@ components/site (sunum)       ↑ yalnızca veri alır, veri çekmez (RSC page'l
 
 ---
 
-## 8. Gizlilik (GDPR/KVKK) Kuralları
+## 8. Gizlilik (GDPR) Kuralları
 
 - **MUST:** Public site varsayılan olarak **çerezsizdir**. Üçüncü taraf embed'ler (YouTube, Vimeo, Google Maps) yalnızca onay bileşeni (`<ConsentEmbed>`) arkasında yüklenir. YouTube için `youtube-nocookie.com` kullanılır.
 - **MUST:** Fontlar self-host edilir. Google Fonts CDN'i çağrılmaz.
