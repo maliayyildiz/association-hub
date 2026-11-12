@@ -70,7 +70,7 @@ R = Yapar · A = Onaylar/Sahibi · C = Danışılır · I = Bilgilendirilir
 | 6 | Deploy | `devops-platform-engineer` | `main` | Prod deploy + smoke + izleme | Release |
 | 6a | Performans (sürüm öncesi) | `load-performance-testing` | Staging | Perf raporu | `perf/results/` |
 | — | **KAPI 4** | PO/BA (QA + DevOps raporlarıyla) | | Sürüm onayı | Release notu |
-| 7 | Yayın & ölçüm | `product-owner-ba` | Yayındaki özellik | Sürüm notu (TR/FR), feature flag ile kademeli açılış, KPI takibi, UAT | Panel "Yenilikler" + KPI raporu |
+| 7 | Yayın & ölçüm | `product-owner-ba` | Yayındaki özellik | Sürüm notu (FR/TR/EN), feature flag ile kademeli açılış, KPI takibi, UAT | Panel "Yenilikler" + KPI raporu |
 
 ---
 
@@ -108,7 +108,7 @@ Bir story ancak şu koşulların hepsi sağlandığında geliştirmeye alınır:
 - [ ] Staging'de tam gece paketi yeşil
 - [ ] Sürüm öncesi k6 load testi eşikleri geçti
 - [ ] Açık Blocker/Critical bug yok
-- [ ] Sürüm notları (TR/FR) hazır
+- [ ] Sürüm notları (FR/TR/EN) hazır
 - [ ] Gerekiyorsa feature flag ile önce pilot dernekler (kademeli açılış planı)
 - [ ] Geri alma adımı belli (DevOps)
 

@@ -116,7 +116,7 @@ Karar: Pilot devam / Genel yayına hazır / Değişiklik gerekli
 **Genel yayın kriteri:** Kritik görevlerin %90'ı yardımsız tamamlanır, CSAT ≥ 4,3, açık Blocker/Critical bug yok.
 
 ## 9. Sürüm notları
-Kullanıcıya dönük sürüm notları **dernek gönüllüsünün dilinde** yazılır (TR/FR):
+Kullanıcıya dönük sürüm notları **dernek gönüllüsünün dilinde** yazılır (FR/TR/EN):
 > ✨ **Yeni:** Artık etkinliklerinizi tek tıkla takviminize ekleyebilirsiniz.
 > 🔧 **İyileştirme:** Fotoğraf yükleme %40 daha hızlı.
 

@@ -415,7 +415,7 @@ Tarayıcı ──(1) presigned URL iste──► Payload API (kota + MIME + boyu
 
 | Katman | Çözüm |
 |---|---|
-| İçerik | Payload `localization: { locales: ['tr','fr','en','de','nl'], fallback: false }` + alan bazlı `localized: true`; kiracının aktif dilleri `tenant.locales`'tan |
+| İçerik | Payload `localization: { locales: ['fr','tr','en'], defaultLocale: 'fr', fallback: false }` (DE/NL Faz 2 – PRD US-10.1) + alan bazlı `localized: true`; kiracının aktif dilleri `tenant.locales`'tan |
 | Slug | Dil bazında localized slug alanı |
 | Arayüz metinleri (public) | `next-intl` mesaj dosyaları (`messages/tr.json`, `fr.json`…) |
 | Admin arayüzü | Payload yerleşik TR/FR/EN çevirileri + özel alanlar için ek çeviriler |
@@ -731,7 +731,7 @@ ADR dosyaları `docs/adr/` altındadır (dizin: `docs/adr/README.md`). ADR şabl
 | H7–H8 | Haberler, etkinlikler (rrule, ics), kategori/etiket, taslak/zamanlama, revalidation |
 | H9 | Albümler + lightbox, belgeler (sürüm, internal, PDF işleme) |
 | H10 | Arama (Postgres FTS), arşiv sayfaları, SEO eklentisi, sitemap, JSON-LD, redirects |
-| H11 | i18n (TR/FR), iletişim formu + Turnstile + Postmark, yasal metin şablonları |
+| H11 | i18n (FR/TR/EN), iletişim formu + Turnstile + Postmark, yasal metin şablonları |
 | H12 | Kurulum sihirbazı, dashboard, süper admin ekranları, audit log, CSV import |
 | H13–H14 | E2E + axe + Lighthouse, yük testi, güvenlik taraması, Docker çıkış build'i, runbook'lar |
 | H15–H16 | Pilot (3 dernek), hata düzeltme, yedekten dönme tatbikatı → **MVP canlı** |
