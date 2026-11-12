@@ -1,0 +1,28 @@
+{
+  "name": "dernekhub",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=24.22.1"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "depcruise": "depcruise apps/web/src --config .dependency-cruiser.cjs",
+    "check": "biome check . && pnpm depcruise && turbo run typecheck test",
+    "payload": "pnpm --filter @dernekhub/web payload",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6",
+    "@changesets/cli": "3.0.3",
+    "dependency-cruiser": "18.7.2",
+    "turbo": "2.11.11",
+    "typescript": "6.0.3"
+  }
+}

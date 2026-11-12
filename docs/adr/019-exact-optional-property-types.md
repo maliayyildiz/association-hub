@@ -2,22 +2,33 @@
 
 | Alan | Değer |
 |---|---|
-| Durum | Önerildi (H1'de karara bağlanacak) |
+| Durum | Kabul |
 | Tarih | 2026-11-12 |
 | Karar veren | Platform sahibi / Mimar |
 | İlgili | CLAUDE.md §5.1 |
 
 ## Bağlam
-CLAUDE.md §5.1 `exactOptionalPropertyTypes: true` ayarını önerir (SHOULD). Ayarın H1'de Payload'ın ürettiği tiplerle uyumunun denenmesini ve çakışma varsa kararın bu ADR'ye yazılmasını ister.
+CLAUDE.md §5.1 `exactOptionalPropertyTypes: true` ayarını önerir (SHOULD). Ayarın H1'de Payload'ın ürettiği tiplerle uyumunun denenmesini ve kararın bu ADR'ye yazılmasını ister.
 
 ## Karar
-H1 iskeletinde ayar **açık** başlatılır. `payload generate:types` çıktısı ve Payload/Next.js API'leri ile `tsc --noEmit` yeşil kalırsa ayar kalıcı olarak açık kalır. `payload-types.ts` kaynaklı, çözülemeyen hatalar çıkarsa kapatılır. Sonuç bu dosyaya yazılır ve sonrasında değiştirilmez.
+`exactOptionalPropertyTypes: true` **açık kalır** (`packages/config/tsconfig.base.json`). Bu karar sonradan değiştirilmez.
+
+## Deneme sonucu (H1, 2026-11-12)
+Ortam: Payload 3.93.0, Next.js 16.4.6, TypeScript 6.0.3, `@payloadcms/db-postgres` 3.93.0.
+
+| Kontrol | Sonuç |
+|---|---|
+| `pnpm payload generate:types` → `payload-types.ts` | Üretildi |
+| `tsc --noEmit` (uygulama + üretilen tipler + admin rotaları) | Hatasız |
+| `next build` (TypeScript adımı dahil) | Başarılı |
+
+Payload kaynaklı hiçbir çakışma çıkmadı. Tek düzeltme kendi test kodumuzda gerekti: test kullanıcısı nesnesine zorunlu alanlar eklendi.
 
 ## Değerlendirilen seçenekler
 | Seçenek | Artı | Eksi | Sonuç |
 |---|---|---|---|
-| Açık | `undefined` ile eksik alan ayrımı, daha güvenli | Üretilen tiplerle çakışma riski | Varsayılan |
-| Kapalı | Sorunsuz uyum | Daha gevşek tipler | Çakışma olursa |
+| Açık | `undefined` ile eksik alan ayrımı, daha güvenli | Test nesnelerinde biraz daha yazım | ✓ |
+| Kapalı | Daha az yazım | Daha gevşek tipler | ✗ |
 
 ## Durum notları
-- 2026-11-12: Öneri olarak açıldı; H1 sonucu bekleniyor.
+- 2026-11-12: Öneri olarak açıldı; aynı gün H1 denemesi sonrası kabul edildi.

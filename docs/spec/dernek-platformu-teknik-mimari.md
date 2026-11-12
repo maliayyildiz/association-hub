@@ -711,7 +711,7 @@ main'e merge
 | ADR-016 | Monorepo: pnpm + Turborepo; lint/format: Biome | Kabul |
 | ADR-017 | Test: Vitest + Testcontainers + Playwright; izolasyon testleri merge şartı | Kabul |
 | ADR-018 | Özel domain: Vercel Domains API (alternatif Cloudflare for SaaS) | Önerildi (Faz 2) |
-| ADR-019 | `exactOptionalPropertyTypes` – H1 uyumluluk denemesine göre karar | Önerildi (H1) |
+| ADR-019 | `exactOptionalPropertyTypes` açık (H1 denemesi başarılı) | Kabul |
 | ADR-020 | Kiracı çözümleme önbelleği: Upstash Redis (Edge Config yerine, CLAUDE.md §2 uyumu) | Önerildi |
 | ADR-021 | Faz 2/3 servisleri (Brevo, DeepL, Stripe, HelloAsso) ADR onayına kadar aday | Önerildi |
 

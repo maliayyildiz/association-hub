@@ -22,7 +22,7 @@ Süreç: CLAUDE.md §15. Yeni ADR için `000-template.md` kopyalanır, sıradaki
 | [016](016-pnpm-turborepo-biome.md) | pnpm + Turborepo + Biome | Kabul |
 | [017](017-testing-stack.md) | Vitest + Testcontainers + Playwright | Kabul |
 | [018](018-custom-domains.md) | Özel domain: Vercel Domains API | Önerildi (Faz 2) |
-| [019](019-exact-optional-property-types.md) | `exactOptionalPropertyTypes` | Önerildi (H1) |
+| [019](019-exact-optional-property-types.md) | `exactOptionalPropertyTypes` açık | Kabul |
 | [020](020-tenant-cache-upstash.md) | Kiracı önbelleği: Upstash Redis | Önerildi |
 | [021](021-later-phase-services.md) | Faz 2/3 servisleri aday statüsünde | Önerildi |
 

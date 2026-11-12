@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Paris",
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "groupName": "payload",
+      "matchPackageNames": ["payload", "@payloadcms/**"]
+    },
+    {
+      "groupName": "next and react",
+      "matchPackageNames": ["next", "react", "react-dom", "@types/react", "@types/react-dom"]
+    },
+    {
+      "groupName": "dev tooling",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
+}
