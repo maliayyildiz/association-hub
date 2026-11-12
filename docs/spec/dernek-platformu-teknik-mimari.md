@@ -60,7 +60,7 @@
 | **Görsel işleme** | `sharp` (Payload içinde) + Cloudflare CDN önbelleği |
 | **Arama** | MVP: PostgreSQL Full-Text Search (`unaccent` + `pg_trgm`) → Faz 2: **Meilisearch** |
 | **Arka plan işleri** | Payload Jobs Queue (Postgres tabanlı) + cron tetikleyici |
-| **E-posta** | **Postmark** (transactional) · Faz 2 bülten: **Brevo** |
+| **E-posta** | **Postmark** (transactional) · Faz 2 bülten: Brevo *(aday – ADR-021)* |
 | **Barındırma (app)** | **Vercel** (AB bölgesi – Frankfurt `fra1`) — çıkış planı: Docker + Hetzner |
 | **Barındırma (DB)** | **Neon Postgres** (AB – Frankfurt), dal (branch) başına preview veritabanı |
 | **DNS / CDN / WAF / Captcha** | **Cloudflare** (DNS, R2, Turnstile, WAF) |
@@ -76,8 +76,8 @@
 | **Yerel geliştirme** | Docker Compose (Postgres, MinIO, Mailpit, Meilisearch) |
 | **Gizli anahtarlar** | Vercel Environment Variables (+ ekip büyürse Infisical/Doppler) |
 | **Bağımlılık güncelleme** | Renovate |
-| **Makine çevirisi (Faz 2)** | DeepL API |
-| **Ödeme (Faz 3)** | Stripe (abonelik) · HelloAsso (Fransa dernek bağışları) |
+| **Makine çevirisi (Faz 2)** | DeepL API *(aday – ADR-021)* |
+| **Ödeme (Faz 3)** | Stripe (abonelik) · HelloAsso (Fransa dernek bağışları) *(aday – ADR-021)* |
 
 **Neden bu yığın – tek cümleyle:**
 > Tek dil (TypeScript), tek uygulama (Next.js + Payload), tek veritabanı (Postgres) ve tamamen yönetilen servislerle; 1–3 kişilik bir ekibin 500 derneğe kadar ölçekleyebileceği, admin panelini sıfırdan yazmadan haftalar içinde MVP çıkarabileceği ve yıllarca bakımını rahatça yapabileceği en sade modern yığın.
@@ -233,7 +233,7 @@ Ek gerekçeler: MIT lisanslı açık kaynak, kendi veritabanımızda çalışır
 
 ### 5.7 E-posta: Postmark (+ Brevo Faz 2)
 - Postmark: transactional e-postada en yüksek teslim edilebilirlik, ayrı "message stream"ler (bildirim vs. dernek kaynaklı), webhook ile bounce takibi.
-- Brevo (Fransız, AB): bülten/pazarlama e-postası için Faz 2'de; GDPR açısından avantajlı.
+- Brevo (Fransız, AB): bülten/pazarlama e-postası için Faz 2 adayı; GDPR açısından avantajlı. *Kullanımı ADR-021 gereği ayrı ADR onayına bağlıdır.*
 - Şablonlar: **React Email** ile kod içinde, TR/FR/EN, dernek markalı.
 
 ### 5.8 Diğer Seçimler (kısa gerekçe)
@@ -274,7 +274,7 @@ export async function middleware(req: NextRequest) {
   if (host === 'admin.dernekhub.org') return NextResponse.next();
   if (host === 'dernekhub.org')      return rewrite('/_portal', req);
 
-  const tenant = await resolveTenant(host);        // Edge Config / KV önbelleği → DB
+  const tenant = await resolveTenant(host);        // Upstash Redis cache → DB (ADR-020)
   if (!tenant) return rewrite('/_not-found', req);
   if (tenant.status === 'askida') return rewrite('/_suspended', req);
 
@@ -282,7 +282,7 @@ export async function middleware(req: NextRequest) {
   return rewrite(`/_sites/${tenant.id}/${locale}${pathWithoutLocale}`, req);
 }
 ```
-- `domains` tablosu → `hostname → tenantId` eşlemesi **Vercel Edge Config** (veya Upstash Redis) içinde önbelleğe alınır; domain değiştiğinde Payload hook'u önbelleği günceller. Böylece middleware'de DB sorgusu olmaz (< 5 ms).
+- `domains` tablosu → `hostname → tenantId` eşlemesi **Upstash Redis** (ADR-020) içinde önbelleğe alınır; domain değiştiğinde Payload hook'u önbelleği günceller. Böylece middleware'de DB sorgusu olmaz (< 5 ms).
 
 ### 6.3 İzolasyon Katmanları (Defense in Depth)
 | Katman | Mekanizma |
@@ -316,7 +316,7 @@ export function buildThemeCss(theme: Theme): string {
 |---|---|---|
 | Cloudflare CDN | Medya dosyaları (immutable, 1 yıl) | Dosya adı içerik hash'li → yenilemeye gerek yok |
 | Vercel Data/Full Route Cache | Public sayfalar ve veri sorguları | `revalidateTag` (Payload `afterChange`/`afterDelete` hook'ları) |
-| Edge Config / Redis | Host → tenant eşlemesi, tema özetleri | Domain/tema hook'ları |
+| Upstash Redis (ADR-020) | Host → tenant eşlemesi, tema özetleri | Domain/tema hook'ları |
 
 **Etiket şeması:** `tenant:{id}`, `tenant:{id}:posts`, `tenant:{id}:post:{slug}`, `tenant:{id}:events`, `tenant:{id}:theme`, `tenant:{id}:settings`, `portal:events`.
 
@@ -406,7 +406,7 @@ Tarayıcı ──(1) presigned URL iste──► Payload API (kota + MIME + boyu
 ## 12. Özel Domain ve SSL
 
 - **Alt alan adları:** `*.dernekhub.org` wildcard DNS (Cloudflare) → Vercel wildcard domain → otomatik SSL.
-- **Özel domain (Faz 2):** Dernek panelden domain girer → backend **Vercel Domains API** ile projeye ekler → DNS talimatı (CNAME `cname.vercel-dns.com` veya A kaydı) gösterilir → `domains.verify` işi durumu sorgular → doğrulanınca Edge Config güncellenir, SSL Vercel tarafından otomatik.
+- **Özel domain (Faz 2):** Dernek panelden domain girer → backend **Vercel Domains API** ile projeye ekler → DNS talimatı (CNAME `cname.vercel-dns.com` veya A kaydı) gösterilir → `domains.verify` işi durumu sorgular → doğrulanınca kiracı önbelleği (Upstash Redis, ADR-020) güncellenir, SSL Vercel tarafından otomatik.
 - Çıkış planı alternatifi: **Cloudflare for SaaS (Custom Hostnames)** veya Hetzner'da **Caddy on-demand TLS**.
 
 ---
@@ -700,7 +700,7 @@ main'e merge
 | ADR-005 | PostgreSQL + Payload Postgres adaptörü (Drizzle) | Kabul |
 | ADR-006 | Paylaşımlı DB, `tenant` sütunu (pool model) | Kabul |
 | ADR-007 | İzolasyon: access control + tek veri erişim modülü + CI testleri; RLS Faz 1.5 public okuma yolunda | Kabul |
-| ADR-008 | Host tabanlı kiracı çözümleme + Edge Config önbelleği | Kabul |
+| ADR-008 | Host tabanlı kiracı çözümleme (önbellek: ADR-020) | Kabul |
 | ADR-009 | Tailwind v4 + CSS değişkenleriyle tema token'ları | Kabul |
 | ADR-010 | Medya: Cloudflare R2 + doğrudan istemci yükleme | Kabul |
 | ADR-011 | Arama: MVP Postgres FTS, Faz 2 Meilisearch | Kabul |
@@ -711,8 +711,11 @@ main'e merge
 | ADR-016 | Monorepo: pnpm + Turborepo; lint/format: Biome | Kabul |
 | ADR-017 | Test: Vitest + Testcontainers + Playwright; izolasyon testleri merge şartı | Kabul |
 | ADR-018 | Özel domain: Vercel Domains API (alternatif Cloudflare for SaaS) | Önerildi (Faz 2) |
+| ADR-019 | `exactOptionalPropertyTypes` – H1 uyumluluk denemesine göre karar | Önerildi (H1) |
+| ADR-020 | Kiracı çözümleme önbelleği: Upstash Redis (Edge Config yerine, CLAUDE.md §2 uyumu) | Önerildi |
+| ADR-021 | Faz 2/3 servisleri (Brevo, DeepL, Stripe, HelloAsso) ADR onayına kadar aday | Önerildi |
 
-ADR şablonu (`docs/adr/000-template.md`): *Bağlam → Karar → Değerlendirilen seçenekler → Sonuçlar → Durum*.
+ADR dosyaları `docs/adr/` altındadır (dizin: `docs/adr/README.md`). ADR şablonu (`docs/adr/000-template.md`): *Bağlam → Karar → Değerlendirilen seçenekler → Sonuçlar → Durum*.
 
 ---
 
